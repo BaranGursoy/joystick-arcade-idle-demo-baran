@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class Mine : Interactable
@@ -17,7 +14,12 @@ public class Mine : Interactable
             SendCollectibleToPlayerStack();
             ResetPassedTime();
         }
-        
+
+        /*if (!playerController.StackHasEmptySpace() && playerController.IsPickaxeActive)
+        {
+            playerController.DisablePickaxe();
+        }*/
+
         passedTimeBetweenCollectibleSpawns += Time.deltaTime;
     }
     
@@ -40,6 +42,7 @@ public class Mine : Interactable
             isPlayerInsideArea = true;
         }
     }
+    
 
     private void OnTriggerExit(Collider other)
     {

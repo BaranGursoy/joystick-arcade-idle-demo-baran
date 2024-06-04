@@ -8,7 +8,7 @@ public abstract class Interactable : MonoBehaviour
     [SerializeField] protected GameObject collectiblePrefab;
     [SerializeField] protected float collectibleSpawnRate = 0.5f;
     
-    protected int neededCollectibleCount = 5;
+    [SerializeField] protected int neededCollectibleCount = 5;
     protected int droppedCollectibleCount = 0;
 
     protected PlayerController playerController;

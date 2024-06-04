@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float playerMoveSpeed;
+    [SerializeField] private float swordSwingDuration;
     [SerializeField] private int maxCarriedCollectibleCount;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController characterController;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform collectibleOreTransform;
     
     [SerializeField] private Pickaxe pickaxe;
+    [SerializeField] private Sword sword;
 
     private Stack<Collectible> _collectibleStack = new Stack<Collectible>();
 
@@ -34,6 +36,12 @@ public class PlayerController : MonoBehaviour
     public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     
+    public bool playerGotSword { get; private set; }
+
+
+    public bool IsPickaxeActive => pickaxe.gameObject.activeInHierarchy;
+    public bool IsSwordActive => sword.gameObject.activeInHierarchy;
+    
     
     private void Awake()
     {
@@ -45,6 +53,21 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         StateMachine.Initialize(IdleState);
+    }
+
+    private void OnEnable()
+    {
+        GameActions.PlayerTouchedSword += SetPlayerGotSword;
+    }
+
+    private void OnDestroy()
+    {
+        GameActions.PlayerTouchedSword -= SetPlayerGotSword;
+    }
+
+    private void SetPlayerGotSword()
+    {
+        playerGotSword = true;
     }
 
     public void SetCollectibleHeight(Transform collectibleParentTransform)
@@ -83,6 +106,20 @@ public class PlayerController : MonoBehaviour
     public void DisablePickaxe()
     {
         pickaxe.DisablePickaxe();
+    }
+    
+    public void ActivateAndSwingSword()
+    {
+        if (!playerGotSword) return;
+        
+        sword.ActivateAndSwingSword(swordSwingDuration);
+    }
+    
+    public void DisableSword()
+    {
+        if (!playerGotSword) return;
+
+        sword.DisableSword();
     }
 
     public void AddToCollectibleStack(Collectible comingCollectible)

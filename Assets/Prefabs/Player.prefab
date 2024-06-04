@@ -1351,6 +1351,7 @@ Transform:
   - {fileID: 3484311073461995386}
   - {fileID: 8899158785677677916}
   - {fileID: 8483813869242098737}
+  - {fileID: 241690362}
   m_Father: {fileID: 8899158785504336629}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1457,6 +1458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMoveSpeed: 7
+  swordSwingDuration: 1
   maxCarriedCollectibleCount: 5
   animator: {fileID: 8899158785504336627}
   characterController: {fileID: 8899158785504336626}
@@ -1467,6 +1469,7 @@ MonoBehaviour:
   collectibleOreTransform: {fileID: 7241094971027032811, guid: 0cab155b29ab729428cd0cf3e16e810e,
     type: 3}
   pickaxe: {fileID: 4761241961933450133}
+  sword: {fileID: 5874177507790462837}
 --- !u!143 &8899158785504336626
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1623,7 +1626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a228c915c40ecab4da2bba13b6d39f8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  playerController: {fileID: 8899158785504336624}
 --- !u!1 &8899158786721892093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,3 +1947,60 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.004522562, y: -0.055763423, z: 0.039669618}
     m_Extent: {x: 1.2686824, y: 1.1587441, z: 0.30398476}
   m_DirtyAABB: 0
+--- !u!1001 &5187556852919934743
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8938115536179947502}
+    m_Modifications:
+    - target: {fileID: 5187556852678293997, guid: 99707420809d18b4988ec1b79b2050e1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187556852678293997, guid: 99707420809d18b4988ec1b79b2050e1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187556852678293997, guid: 99707420809d18b4988ec1b79b2050e1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187556852678293997, guid: 99707420809d18b4988ec1b79b2050e1,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187556852678293998, guid: 99707420809d18b4988ec1b79b2050e1,
+        type: 3}
+      propertyPath: m_Name
+      value: SwordContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5187556852678293998, guid: 99707420809d18b4988ec1b79b2050e1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 99707420809d18b4988ec1b79b2050e1, type: 3}
+--- !u!4 &241690362 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5187556852678293997, guid: 99707420809d18b4988ec1b79b2050e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5187556852919934743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5874177507790462837 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1619222372095557730, guid: 99707420809d18b4988ec1b79b2050e1,
+    type: 3}
+  m_PrefabInstance: {fileID: 5187556852919934743}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43017e0683d47c84ba5c17ad0e754d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
