@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float playerMoveSpeed;
+    [SerializeField] private int maxCarriedCollectibleCount;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Transform playerModelTransform;
@@ -14,10 +15,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputActionReference moveAction;
 
     [SerializeField] private Transform collectibleOreTransform;
+    
+    [SerializeField] private Pickaxe pickaxe;
+
+    private Stack<Collectible> _collectibleStack = new Stack<Collectible>();
 
     private float _collectibleOreHeight;
-    private int _stackObjectCount;
-    
+
     public float PlayerMoveSpeed => playerMoveSpeed;
     public Animator Animator => animator;
     public CharacterController CharacterController => characterController;
@@ -41,7 +45,11 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         StateMachine.Initialize(IdleState);
-        _collectibleOreHeight = collectibleOreTransform.GetChild(0).localScale.y;
+        Transform actualOreTransform = collectibleOreTransform.GetChild(0);
+
+        MeshRenderer actualOreMeshRenderer = actualOreTransform.GetComponent<MeshRenderer>();
+
+        _collectibleOreHeight = actualOreMeshRenderer.bounds.size.y;
     }
 
     private void Update()
@@ -58,10 +66,35 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetNextStackItemPosition()
     {
         Vector3 nextStackItemLocalPosition =
-            stackStartPointTransform.localPosition + (Vector3.up * (_collectibleOreHeight * _stackObjectCount));
-        
-        _stackObjectCount++;
-        
+            stackStartPointTransform.localPosition + (Vector3.up * (_collectibleOreHeight * _collectibleStack.Count - 1));
+
         return nextStackItemLocalPosition;
+    }
+
+    public void ActivateAndSwingPickaxe(float oneSwingDuration)
+    {
+        pickaxe.ActivateAndSwingPickaxe(oneSwingDuration);
+    }
+    
+    public void DisablePickaxe()
+    {
+        pickaxe.DisablePickaxe();
+    }
+
+    public void AddToCollectibleStack(Collectible comingOre)
+    {
+        _collectibleStack.Push(comingOre);
+    }
+
+    public bool StackIsEmpty => _collectibleStack.Count == 0;
+
+    public Collectible TakeFromCollectibleStack()
+    {
+       return _collectibleStack.Pop();
+    }
+
+    public bool StackHasEmptySpace()
+    {
+        return _collectibleStack.Count < maxCarriedCollectibleCount;
     }
 }
