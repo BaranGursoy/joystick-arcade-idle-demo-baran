@@ -34,6 +34,7 @@ public class Mine : Interactable
             if (playerController)
             {
                 playerController.ActivateAndSwingPickaxe(collectibleSpawnRate);
+                playerController.SetCollectibleHeight(collectiblePrefab.transform);
             }
             
             isPlayerInsideArea = true;

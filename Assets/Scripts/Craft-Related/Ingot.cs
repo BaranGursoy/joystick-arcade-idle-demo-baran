@@ -7,9 +7,8 @@ public class Ingot : Collectible
     {
     }
     
-    public void SendCollectibleToMachineStack(IngotHolder ingotHolder)
+    public void SendIngotToMachineStack(IngotHolder ingotHolder)
     {
-        transform.localScale = Vector3.one;
         transform.DOLocalJump(ingotHolder.GetNextStackItemPosition(), 0.7f, 1, 0.3f)
             .SetEase(Ease.OutSine).OnComplete((() =>
             {

@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public abstract class Interactable : MonoBehaviour
 {
-    [SerializeField] private GameObject collectiblePrefab;
+    [SerializeField] protected GameObject collectiblePrefab;
     [SerializeField] protected float collectibleSpawnRate = 0.5f;
     
     protected int neededCollectibleCount = 5;
@@ -21,8 +21,10 @@ public abstract class Interactable : MonoBehaviour
 
     protected Collectible SpawnCollectible(Transform parentTransform)
     {
-        lastSpawnedCollectible = Instantiate(collectiblePrefab, parentTransform.position, Quaternion.identity, parentTransform)
+        lastSpawnedCollectible = Instantiate(collectiblePrefab, parentTransform.position, Quaternion.identity, null)
             .GetComponent<Collectible>();
+        
+        lastSpawnedCollectible.transform.SetParent(parentTransform);
 
         return lastSpawnedCollectible;
     }
@@ -43,6 +45,9 @@ public abstract class Interactable : MonoBehaviour
             return;
         }
 
+
+        if (!playerController.StackIsEmpty && playerController.PeekStack().GetType() != lastSpawnedCollectible.GetType()) return;
+        
         lastSpawnedCollectible.SendCollectibleToPlayer(playerController);
     }
     

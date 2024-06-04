@@ -1,10 +1,15 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Processor : Interactable
 {
     [SerializeField] private IngotHolder ingotHolder;
+    [SerializeField] private TextMeshPro processorCountTMP;
+    [SerializeField] private TextMeshPro processorTimerTMP;
+
     private void SendOreToProcessor(Collectible collectible)
     {
         if (collectible is Ore ore)
@@ -17,29 +22,42 @@ public class Processor : Interactable
     {
         base.CollectableArrived();
 
+        UpdateRockCountText();
+
         if (droppedCollectibleCount >= neededCollectibleCount)
         {
             StartCoroutine(IngotSpawnCoroutine());
-            droppedCollectibleCount = 0;
         }
     }
 
     private IEnumerator IngotSpawnCoroutine()
     {
-        float passedTimeForCoroutine = 0f;
-        while (passedTimeForCoroutine < collectibleSpawnRate)
+        ActivateProcessTimerTMP();
+        
+        float passedTimeForCoroutine = collectibleSpawnRate;
+        while (passedTimeForCoroutine > 0f)
         {
-            
-            passedTimeForCoroutine += Time.deltaTime;
+            int timeForText = Mathf.CeilToInt(passedTimeForCoroutine);
+            processorTimerTMP.text = timeForText.ToString();
+            passedTimeForCoroutine -= Time.deltaTime;
             yield return null;
         }
+        
+        processorTimerTMP.text = "0";
+
+        yield return new WaitForSeconds(0.1f);
+
+        DisableProcessTimerTMP();
         
         Collectible spawnedCollectible = SpawnCollectible(transform);
 
         if (spawnedCollectible is Ingot spawnedIngot)
         {
-            spawnedIngot.SendCollectibleToMachineStack(ingotHolder);
+            spawnedIngot.SendIngotToMachineStack(ingotHolder);
         }
+        
+        droppedCollectibleCount = 0;
+        UpdateRockCountText();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,6 +68,11 @@ public class Processor : Interactable
             {
                 playerController = other.gameObject.GetComponentInParent<PlayerController>();
             }
+
+            if (playerController)
+            {
+                playerController.SetCollectibleHeight(collectiblePrefab.transform);
+            }
             
             isPlayerInsideArea = true;
         }
@@ -59,8 +82,28 @@ public class Processor : Interactable
     {
         if (playerController && !playerController.StackIsEmpty)
         {
-            Collectible collectibleFromPlayer = playerController.TakeFromCollectibleStack();
-            SendOreToProcessor(collectibleFromPlayer);
+            if(droppedCollectibleCount >= neededCollectibleCount) return;
+
+            if (playerController.PeekStack() is Ore)
+            {
+                Collectible collectibleFromPlayer = playerController.TakeFromCollectibleStack();
+                SendOreToProcessor(collectibleFromPlayer);
+            }
         }
+    }
+
+    private void UpdateRockCountText()
+    {
+        processorCountTMP.text = $"Rock Count: {droppedCollectibleCount}/{neededCollectibleCount}";
+    }
+
+    public void DisableProcessTimerTMP()
+    {
+        processorTimerTMP.gameObject.SetActive(false);
+    }
+    
+    private void ActivateProcessTimerTMP()
+    {
+        processorTimerTMP.gameObject.SetActive(true);
     }
 }

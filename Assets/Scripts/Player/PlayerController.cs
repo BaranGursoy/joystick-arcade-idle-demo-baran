@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private Stack<Collectible> _collectibleStack = new Stack<Collectible>();
 
-    private float _collectibleOreHeight;
+    private float _collectibleHeight;
 
     public float PlayerMoveSpeed => playerMoveSpeed;
     public Animator Animator => animator;
@@ -45,11 +45,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         StateMachine.Initialize(IdleState);
-        Transform actualOreTransform = collectibleOreTransform.GetChild(0);
+    }
 
-        MeshRenderer actualOreMeshRenderer = actualOreTransform.GetComponent<MeshRenderer>();
+    public void SetCollectibleHeight(Transform collectibleParentTransform)
+    {
+        Transform actualCollectibleTransform = collectibleParentTransform.GetChild(0);
 
-        _collectibleOreHeight = actualOreMeshRenderer.bounds.size.y;
+        MeshRenderer actualCollectibleMeshRenderer = actualCollectibleTransform.GetComponent<MeshRenderer>();
+
+        _collectibleHeight = actualCollectibleMeshRenderer.bounds.size.y;
     }
 
     private void Update()
@@ -66,7 +70,7 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetNextStackItemPosition()
     {
         Vector3 nextStackItemLocalPosition =
-            stackStartPointTransform.localPosition + (Vector3.up * (_collectibleOreHeight * _collectibleStack.Count - 1));
+            stackStartPointTransform.localPosition + (Vector3.up * (_collectibleHeight * _collectibleStack.Count - 1));
 
         return nextStackItemLocalPosition;
     }
@@ -81,9 +85,11 @@ public class PlayerController : MonoBehaviour
         pickaxe.DisablePickaxe();
     }
 
-    public void AddToCollectibleStack(Collectible comingOre)
+    public void AddToCollectibleStack(Collectible comingCollectible)
     {
-        _collectibleStack.Push(comingOre);
+        if(!StackIsEmpty && PeekStack().GetType() != comingCollectible.GetType()) return;
+        
+        _collectibleStack.Push(comingCollectible);
     }
 
     public bool StackIsEmpty => _collectibleStack.Count == 0;
@@ -96,5 +102,10 @@ public class PlayerController : MonoBehaviour
     public bool StackHasEmptySpace()
     {
         return _collectibleStack.Count < maxCarriedCollectibleCount;
+    }
+
+    public Collectible PeekStack()
+    {
+        return _collectibleStack.Peek();
     }
 }

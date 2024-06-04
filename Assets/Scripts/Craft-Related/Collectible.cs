@@ -16,7 +16,6 @@ public abstract class Collectible : MonoBehaviour
     public void SendCollectibleToMachine(Interactable interactableMachine)
     {
         transform.SetParent(interactableMachine.transform, true);
-        transform.localScale = Vector3.one;
         transform.DOLocalJump(Vector3.zero, 0.7f, 1, 0.3f)
             .SetEase(Ease.OutSine).OnComplete(()=>
             {
