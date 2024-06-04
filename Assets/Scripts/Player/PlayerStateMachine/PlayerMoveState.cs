@@ -48,7 +48,6 @@ public class PlayerMoveState : PlayerState
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         player.PlayerModelTransform.rotation = Quaternion.Slerp(player.PlayerModelTransform.rotation, targetRotation, 5f * Time.deltaTime);
         
-        float animationSpeed = moveDirection.magnitude / player.PlayerMoveSpeed;
         player.Animator.SetFloat(RunSpeed, moveDirection.magnitude);
     }
     

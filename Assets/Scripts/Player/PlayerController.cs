@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Transform playerModelTransform;
     [SerializeField] private InputActionReference moveAction;
-
-
+    
     public float PlayerMoveSpeed => playerMoveSpeed;
     public Animator Animator => animator;
     public CharacterController CharacterController => characterController;
@@ -20,14 +20,14 @@ public class PlayerController : MonoBehaviour
     
     private PlayerStateMachine StateMachine { get; set; }
     
-    public PLayerIdleState IdleState { get; private set; }
+    public PlayerIdleState IdleState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     
     private void Awake()
     {
         StateMachine = new PlayerStateMachine();
 
-        IdleState = new PLayerIdleState(this, StateMachine);
+        IdleState = new PlayerIdleState(this, StateMachine);
         MoveState = new PlayerMoveState(this, StateMachine);
     }
 
@@ -46,5 +46,4 @@ public class PlayerController : MonoBehaviour
     {
         StateMachine.CurrentState.UpdatePhysics();
     }
-
 }

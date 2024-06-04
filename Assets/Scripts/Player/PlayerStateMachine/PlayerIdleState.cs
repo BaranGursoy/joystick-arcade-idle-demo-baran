@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class PLayerIdleState : PlayerState
+public class PlayerIdleState : PlayerState
 {
     private static readonly int IsMoving = Animator.StringToHash("isMoving");
-    public PLayerIdleState(PlayerController player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
+    public PlayerIdleState(PlayerController player, PlayerStateMachine stateMachine) : base(player, stateMachine) { }
 
     public override void Enter()
     {
