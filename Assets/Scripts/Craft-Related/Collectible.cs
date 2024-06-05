@@ -15,19 +15,16 @@ public abstract class Collectible : MonoBehaviour
     
     public void SendCollectibleToMachine(Interactable interactableMachine)
     {
-        transform.SetParent(interactableMachine.transform, true);
-        transform.DOLocalJump(Vector3.zero, 0.7f, 1, 0.3f)
+        transform.DOJump(interactableMachine.transform.position, 0.7f, 1, 0.3f)
             .SetEase(Ease.OutSine).OnComplete(()=>
             {
                 interactableMachine.CollectableArrived();
                 Destroy(gameObject);
             });
 
-        transform.DOLocalRotate(interactableMachine.transform.localRotation.eulerAngles, 0.29f);
+        transform.DORotate(interactableMachine.transform.rotation.eulerAngles, 0.29f);
     }
     
-
-
     public abstract void OnCollect();
 
 }

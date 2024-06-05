@@ -12,6 +12,12 @@ public class PlayerCollisionDetector : MonoBehaviour
         {
             playerController.ActivateAndSwingSword();
         }
+
+        if (other.gameObject.CompareTag("Ore"))
+        {
+            Ore oreFromGround = other.gameObject.GetComponent<Ore>();
+            playerController.CollectOreFromGround(oreFromGround);
+        }
     }
 
     private void OnTriggerExit(Collider other)

@@ -14,8 +14,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform playerModelTransform;
     [SerializeField] private Transform stackStartPointTransform;
     [SerializeField] private InputActionReference moveAction;
-
-    [SerializeField] private Transform collectibleOreTransform;
     
     [SerializeField] private Pickaxe pickaxe;
     [SerializeField] private Sword sword;
@@ -37,10 +35,7 @@ public class PlayerController : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     
     public bool playerGotSword { get; private set; }
-
-
-    public bool IsPickaxeActive => pickaxe.gameObject.activeInHierarchy;
-    public bool IsSwordActive => sword.gameObject.activeInHierarchy;
+    
     
     public bool StackIsEmpty => _collectibleStack.Count == 0;
 
@@ -146,4 +141,14 @@ public class PlayerController : MonoBehaviour
     {
         return _collectibleStack.Peek();
     }
+
+    public void CollectOreFromGround(Ore oreFromGround)
+    {
+        if (!StackIsEmpty && PeekStack() is not Ore) return;
+        
+        if(!StackHasEmptySpace()) return;
+
+        oreFromGround.SendOreFromGroundToPlayerStack(this);
+    }
+    
 }

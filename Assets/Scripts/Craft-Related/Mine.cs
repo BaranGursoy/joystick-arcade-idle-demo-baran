@@ -7,23 +7,33 @@ public class Mine : Interactable
     {
         if(!isPlayerInsideArea) return;
 
-        if (passedTimeBetweenCollectibleSpawns >= collectibleSpawnRate && playerController && playerController.StackHasEmptySpace())
+        if (passedTimeBetweenCollectibleSpawns >= collectibleSpawnRate)
         {
-            SpawnCollectible(transform);
-            AddToPlayerStack();
-            SendCollectibleToPlayerStack();
+            Collectible spawnedCollectible = SpawnCollectible(transform);
+            
+            if(playerController.StackIsEmpty || (playerController.StackHasEmptySpace() && playerController.PeekStack().GetType() == typeof(Ore)))
+            {
+                AddToPlayerStack();
+                SendCollectibleToPlayerStack();
+            }
+
+            else if (spawnedCollectible is Ore spawnedOre)
+            {
+                SendOreToRandomPlace(spawnedOre);
+            }
+            
             ResetPassedTime();
         }
-
-        /*if (!playerController.StackHasEmptySpace() && playerController.IsPickaxeActive)
-        {
-            playerController.DisablePickaxe();
-        }*/
-
+        
         passedTimeBetweenCollectibleSpawns += Time.deltaTime;
     }
-    
-    
+
+    private void SendOreToRandomPlace(Ore spawnedOre)
+    {
+        spawnedOre.SendToOreToRandomPlace(transform.position);
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

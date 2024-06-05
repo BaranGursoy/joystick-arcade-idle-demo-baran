@@ -64,34 +64,43 @@ public class Processor : Interactable
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (!playerController)
-            {
-                playerController = other.gameObject.GetComponentInParent<PlayerController>();
-            }
-
-            if (playerController)
-            {
-                playerController.SetCollectibleHeight(collectiblePrefab.transform);
-            }
-            
-            isPlayerInsideArea = true;
+            HandlePlayerEnter(other);
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void HandlePlayerEnter(Collider other)
     {
-        if (playerController && !playerController.StackIsEmpty)
+        if (!playerController)
         {
-            if(droppedCollectibleCount >= neededCollectibleCount) return;
+            playerController = other.gameObject.GetComponentInParent<PlayerController>();
+        }
 
-            if (playerController.PeekStack() is Ore)
-            {
-                Collectible collectibleFromPlayer = playerController.TakeFromCollectibleStack();
-                SendOreToProcessor(collectibleFromPlayer);
-            }
+        if (!playerController) return;
+
+        playerController.SetCollectibleHeight(collectiblePrefab.transform);
+        isPlayerInsideArea = true;
+
+        if (!playerController.StackIsEmpty)
+        {
+            StartCoroutine(ProcessPlayerCollectiblesCoroutine());
         }
     }
 
+    private IEnumerator ProcessPlayerCollectiblesCoroutine()
+    {
+        if (droppedCollectibleCount >= neededCollectibleCount) yield return null;
+
+        for (int i = 0; i < neededCollectibleCount - droppedCollectibleCount; i++)
+        {
+            if (playerController.StackIsEmpty || playerController.PeekStack() is not Ore) yield break;
+
+            Collectible collectibleFromPlayer = playerController.TakeFromCollectibleStack();
+            SendOreToProcessor(collectibleFromPlayer);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    
     private void UpdateRockCountText()
     {
         processorCountTMP.text = $"Rock Count: {droppedCollectibleCount}/{neededCollectibleCount}";
