@@ -12,10 +12,11 @@ public class Enemy : MonoBehaviour
 
     private void GetHit(Vector3 swordPos)
     {
+        GameActions.ShakeCamera?.Invoke();
         _health--;
         SplashBlood();
         
-        GameActions.PlaySfxAction?.Invoke(SFXType.Hit);
+        GameActions.PlayEnemyHitSfx?.Invoke();
 
         if (_health <= 0)
         {
@@ -31,11 +32,13 @@ public class Enemy : MonoBehaviour
         Vector3 forceDirection = (transform.position - swordPos).normalized;
         forceDirection.y = 0; 
         _enemyRb.AddForce(forceDirection * knockbackForce + Vector3.up * verticalKnockbackForce, ForceMode.Impulse);
+        GameActions.StopShakingCamera?.Invoke();
     }
 
     private void DestroyEnemy()
     {
         GameActions.EnemyDied?.Invoke();
+        GameActions.StopShakingCamera?.Invoke();
         _bloodParticleSystem.transform.SetParent(null);
         enemyTutorial.gameObject.SetActive(false);
         Destroy(gameObject);
@@ -51,6 +54,14 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.CompareTag("Sword"))
         {
             GetHit(other.transform.position);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Sword"))
+        {
+            GameActions.StopShakingCamera?.Invoke();
         }
     }
 }

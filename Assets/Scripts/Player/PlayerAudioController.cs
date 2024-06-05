@@ -51,9 +51,9 @@ public enum SFXType
     IngotCrafted,
     SwordCrafted,
     Swoosh,
-    Hit,
     GameWon,
-    CollectItem
+    CollectItem,
+    BroomSweep
 }
 
 [Serializable]
