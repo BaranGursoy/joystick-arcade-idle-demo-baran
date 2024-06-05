@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     {
         _health--;
         SplashBlood();
+        
+        GameActions.PlaySfxAction?.Invoke(SFXType.Hit);
 
         if (_health <= 0)
         {

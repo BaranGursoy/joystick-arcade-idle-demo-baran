@@ -13,6 +13,7 @@ public class Ingot : Collectible
             .SetEase(Ease.OutSine).OnComplete((() =>
             {
                 ingotHolder.AddToIngotStack(this);
+                GameActions.PlaySfxAction?.Invoke(SFXType.IngotCrafted);
             }));
 
         transform.DOLocalRotate(ingotHolder.transform.localRotation.eulerAngles, 0.3f);

@@ -59,6 +59,7 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void CollectableArrived()
     {
+        GameActions.PlaySfxAction?.Invoke(SFXType.PutCollectible);
         droppedCollectibleCount++;
     }
 

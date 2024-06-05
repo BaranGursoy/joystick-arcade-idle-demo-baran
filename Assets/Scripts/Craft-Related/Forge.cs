@@ -67,6 +67,7 @@ public class Forge : Interactable
         spawnedSword.transform.DOLocalJump(Vector3.zero, 0.7f, 1, 0.3f).SetEase(Ease.OutSine).OnComplete(() =>
         {
             swordHolder.SetSwordCrafted();
+            GameActions.PlaySfxAction?.Invoke(SFXType.SwordCrafted);
         });
     }
 

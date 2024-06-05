@@ -1,15 +1,35 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Mine : Interactable
 {
+    [SerializeField] private MineRespawner mineRespawner;
+
+    [SerializeField] private int mineHealth = 7;
+    [SerializeField] private float mineRespawnTime = 3f;
+
+    private int _mineStartingHealth;
+    private bool _isMineFinished = false;
+
+    private void Start()
+    {
+        _mineStartingHealth = mineHealth;
+    }
+
     private void Update()
     {
+        if(_isMineFinished) return;
+        
         if(!isPlayerInsideArea) return;
 
         if (passedTimeBetweenCollectibleSpawns >= collectibleSpawnRate)
         {
             Collectible spawnedCollectible = SpawnCollectible(transform);
+
+            DecreaseMineHealth();
+            
+            GameActions.PlaySfxAction?.Invoke(SFXType.Mine);
             
             if(playerController.StackIsEmpty || (playerController.StackHasEmptySpace() && playerController.PeekStack().GetType() == typeof(Ore)))
             {
@@ -26,6 +46,23 @@ public class Mine : Interactable
         }
         
         passedTimeBetweenCollectibleSpawns += Time.deltaTime;
+    }
+
+    private void DecreaseMineHealth()
+    {
+        mineHealth--;
+
+        if (mineHealth <= 0)
+        {
+            playerController.DisablePickaxe();
+            _isMineFinished = true;
+            RespawnMine();
+        }
+    }
+
+    private void RespawnMine()
+    {
+        mineRespawner.RespawnMine(mineRespawnTime, this);
     }
 
     private void SendOreToRandomPlace(Ore spawnedOre)
@@ -64,5 +101,15 @@ public class Mine : Interactable
             playerController.DisablePickaxe();
         }
     }
-    
+
+    public void ResetMine()
+    {
+        if (isPlayerInsideArea)
+        {
+            playerController.ActivateAndSwingPickaxe(collectibleSpawnRate);
+        }
+        
+        mineHealth = _mineStartingHealth;
+        _isMineFinished = false;
+    }
 }
