@@ -1783,21 +1783,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyContainer
       objectReference: {fileID: 0}
-    - target: {fileID: 6019107627398997674, guid: 13f44e808009c664483f47d5871ba501,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6019107627398997677, guid: 13f44e808009c664483f47d5871ba501,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26f468f3bcf644949807145a6812da25, type: 2}
-    - target: {fileID: 6019107627398997677, guid: 13f44e808009c664483f47d5871ba501,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26f468f3bcf644949807145a6812da25, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13f44e808009c664483f47d5871ba501, type: 3}
 --- !u!1001 &8746368052586840006
@@ -1878,7 +1863,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 241690361, guid: 911ee1297fc9b3b449e5afb87c092fdb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8899158785504336628, guid: 911ee1297fc9b3b449e5afb87c092fdb,
         type: 3}
