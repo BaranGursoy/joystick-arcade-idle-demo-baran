@@ -10,7 +10,10 @@ public class Ore : Collectible
         Vector3 endPos = startPosition + Random.onUnitSphere * 4f;
         endPos.y = 0.1f;
 
-        transform.DOJump(endPos, 1f, 1, 0.45f);
+        transform.DOJump(endPos, 1f, 1, 0.45f).OnComplete(() =>
+        {
+            GameActions.StopShakingCamera?.Invoke();
+        });
         
         _isCollectible = true;
     }

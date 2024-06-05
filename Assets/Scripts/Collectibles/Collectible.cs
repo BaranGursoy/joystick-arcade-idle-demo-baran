@@ -10,6 +10,7 @@ public abstract class Collectible : MonoBehaviour
         transform.DOLocalMove(playerController.GetNextStackItemPosition(), 0.3f)
             .SetEase(Ease.OutSine).OnComplete(() =>
             {
+                GameActions.StopShakingCamera?.Invoke();
                 GameActions.PlaySfxAction?.Invoke(SFXType.CollectItem);
             });
 

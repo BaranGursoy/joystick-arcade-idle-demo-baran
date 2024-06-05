@@ -35,6 +35,8 @@ public class Mine : Interactable
 
     private void SpawnOreFromMine()
     {
+        GameActions.ShakeCamera?.Invoke();
+        
         Collectible spawnedCollectible = SpawnCollectible(transform);
 
         AdjustScaleOfMine();

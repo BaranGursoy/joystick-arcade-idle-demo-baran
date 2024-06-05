@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
         Vector3 forceDirection = (transform.position - swordPos).normalized;
         forceDirection.y = 0; 
         _enemyRb.AddForce(forceDirection * knockbackForce + Vector3.up * verticalKnockbackForce, ForceMode.Impulse);
-        GameActions.StopShakingCamera?.Invoke();
     }
 
     private void DestroyEnemy()
