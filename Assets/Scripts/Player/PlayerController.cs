@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
     public bool IsPickaxeActive => pickaxe.gameObject.activeInHierarchy;
     public bool IsSwordActive => sword.gameObject.activeInHierarchy;
     
-    
+    public bool StackIsEmpty => _collectibleStack.Count == 0;
+
     private void Awake()
     {
         StateMachine = new PlayerStateMachine();
@@ -58,11 +59,13 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         GameActions.PlayerTouchedSword += SetPlayerGotSword;
+        GameActions.EnemyDied += DisableSword;
     }
 
     private void OnDestroy()
     {
         GameActions.PlayerTouchedSword -= SetPlayerGotSword;
+        GameActions.EnemyDied -= DisableSword;
     }
 
     private void SetPlayerGotSword()
@@ -128,9 +131,7 @@ public class PlayerController : MonoBehaviour
         
         _collectibleStack.Push(comingCollectible);
     }
-
-    public bool StackIsEmpty => _collectibleStack.Count == 0;
-
+    
     public Collectible TakeFromCollectibleStack()
     {
        return _collectibleStack.Pop();

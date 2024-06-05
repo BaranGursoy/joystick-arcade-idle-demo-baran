@@ -687,6 +687,7 @@ GameObject:
   - component: {fileID: 530798162}
   - component: {fileID: 530798163}
   - component: {fileID: 530798164}
+  - component: {fileID: 530798165}
   m_Layer: 0
   m_Name: EnemyContainer
   m_TagString: Enemy
@@ -735,6 +736,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9523148fd522de54bb2d72b1f85b2717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodPrefab: {fileID: 959243637630676135, guid: c13c7554636e98f4fb1afa4246b9824f,
+    type: 3}
+--- !u!54 &530798165
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530798161}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &733459092
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,7 +965,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40604
+  m_Name: pb_Mesh40860
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1431,28 +1450,14 @@ GameObject:
   - component: {fileID: 2024705446}
   - component: {fileID: 2024705445}
   - component: {fileID: 2024705444}
-  - component: {fileID: 2024705443}
+  - component: {fileID: 2024705449}
   m_Layer: 0
-  m_Name: Plane
-  m_TagString: Untagged
+  m_Name: Floor
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!64 &2024705443
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2024705442}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 935855062}
 --- !u!33 &2024705444
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -1708,6 +1713,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2024705449
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024705442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 100, y: 0.01, z: 100}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2052872921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,11 +1968,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1711813855407962928, guid: 911ee1297fc9b3b449e5afb87c092fdb,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8899158785504336628, guid: 911ee1297fc9b3b449e5afb87c092fdb,
         type: 3}
       propertyPath: m_Name
