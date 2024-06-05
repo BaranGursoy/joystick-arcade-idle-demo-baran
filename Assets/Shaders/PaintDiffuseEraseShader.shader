@@ -14,7 +14,7 @@ Shader "Custom/PaintDiffuseErase"
         {
             ZTest LEqual
             Cull Off
-            ZWrite On
+            ZWrite Off
             Blend SrcAlpha OneMinusSrcAlpha
 
             CGPROGRAM

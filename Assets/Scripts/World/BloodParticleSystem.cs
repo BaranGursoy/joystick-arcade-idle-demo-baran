@@ -18,19 +18,12 @@ public class BloodParticleSystem : MonoBehaviour
         bloodParticleSystem.Play();
         _collisionCount = 0;
     }
-    
+
     private void OnParticleCollision(GameObject other)
     {
         if (!other.gameObject.CompareTag("Floor")) return;
         if (!bloodParticleSystem) return;
-            
-        _collisionCount++;
 
-        if (_collisionCount > 2)
-        {
-            return;
-        }
-        
         int numCollisionEvents = bloodParticleSystem.GetCollisionEvents(other, _collisionEvents);
         
         int i = 0;
@@ -41,7 +34,7 @@ public class BloodParticleSystem : MonoBehaviour
             i++;
         }
     }
-    
+
     private void SpawnBloodSplat(Vector3 contactPoint)
     {
         contactPoint.y = 0.1f;

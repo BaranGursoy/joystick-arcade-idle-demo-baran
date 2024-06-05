@@ -3808,7 +3808,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4916,3 +4916,4 @@ MonoBehaviour:
   bloodParticleSystem: {fileID: 940209602267805566}
   bloodSplatPrefab: {fileID: 3200591066433118299, guid: 46e7a64a287fd0645809da583bf58c98,
     type: 3}
+  maxBloodSplats: 2
