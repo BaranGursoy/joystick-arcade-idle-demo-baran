@@ -10,10 +10,13 @@ public class BloodParticleSystem : MonoBehaviour
     [SerializeField] private GameObject bloodSplatPrefab;
     private List<ParticleCollisionEvent> _collisionEvents = new();
 
+    private int _collisionCount;
+
 
     public void Play()
     {
         bloodParticleSystem.Play();
+        _collisionCount = 0;
     }
     
     private void OnParticleCollision(GameObject other)
@@ -21,6 +24,13 @@ public class BloodParticleSystem : MonoBehaviour
         if (!other.gameObject.CompareTag("Floor")) return;
         if (!bloodParticleSystem) return;
             
+        _collisionCount++;
+
+        if (_collisionCount > 2)
+        {
+            return;
+        }
+        
         int numCollisionEvents = bloodParticleSystem.GetCollisionEvents(other, _collisionEvents);
         
         int i = 0;
