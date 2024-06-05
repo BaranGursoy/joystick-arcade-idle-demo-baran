@@ -170,7 +170,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4916,4 +4916,3 @@ MonoBehaviour:
   bloodParticleSystem: {fileID: 940209602267805566}
   bloodSplatPrefab: {fileID: 3200591066433118299, guid: 46e7a64a287fd0645809da583bf58c98,
     type: 3}
-  maxBloodSplats: 2
