@@ -12,6 +12,7 @@ public class SwordHolder : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && _swordCrafted)
         {
             GameActions.PlayerTouchedSword?.Invoke();
+            Destroy(transform.GetChild(0).gameObject);
             _swordCrafted = false;
         }
     }

@@ -135,7 +135,7 @@ MonoBehaviour:
   m_spectrumSize: 512
   m_advancedModulePosition: 3
   m_advancedModuleOffset: {x: 0, y: 0}
-  m_advancedModuleState: 0
+  m_advancedModuleState: 4
 --- !u!114 &11480938
 MonoBehaviour:
   m_ObjectHideFlags: 0
