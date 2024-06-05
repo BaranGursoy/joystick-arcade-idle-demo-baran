@@ -82,11 +82,11 @@ public class Processor : Interactable
 
         if (!playerController.StackIsEmpty)
         {
-            StartCoroutine(ProcessPlayerCollectiblesCoroutine());
+            StartCoroutine(SendPlayerOresCoroutine());
         }
     }
 
-    private IEnumerator ProcessPlayerCollectiblesCoroutine()
+    private IEnumerator SendPlayerOresCoroutine()
     {
         if (droppedCollectibleCount >= neededCollectibleCount) yield return null;
 

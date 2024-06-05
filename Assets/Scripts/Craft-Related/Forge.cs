@@ -56,9 +56,8 @@ public class Forge : Interactable
 
         MoveSwordToRightSide(spawnedSword);
         
-        UpdateIngotCountText();
-
         ResetDroppedCollectibleCount();
+        UpdateIngotCountText();
     }
 
     private void MoveSwordToRightSide(GameObject spawnedSword)
@@ -83,23 +82,37 @@ public class Forge : Interactable
             if (playerController)
             {
                 playerController.SetCollectibleHeight(collectiblePrefab.transform);
+                HandlePlayerEnter();
             }
             
             isPlayerInsideArea = true;
         }
-    }
-
-    private void OnTriggerStay(Collider other)
+    } 
+    
+    private void HandlePlayerEnter()
     {
         if (playerController && !playerController.StackIsEmpty)
         {
             if(droppedCollectibleCount >= neededCollectibleCount) return;
 
-            if (playerController.PeekStack() is Ingot)
-            {
-                Collectible collectibleFromPlayer = playerController.TakeFromCollectibleStack();
-                SendIngotToProcessor(collectibleFromPlayer);
-            }
+            StartCoroutine(SendPlayerIngotsCoroutine());
+        }
+    }
+    
+    private IEnumerator SendPlayerIngotsCoroutine()
+    {
+        if (droppedCollectibleCount >= neededCollectibleCount) yield return null;
+
+        int neededCollectibleLeft = neededCollectibleCount - droppedCollectibleCount;
+        
+        for (int i = 0; i < neededCollectibleLeft; i++)
+        {
+            if (playerController.StackIsEmpty || playerController.PeekStack() is not Ingot) yield break;
+
+            Collectible collectibleFromPlayer = playerController.TakeFromCollectibleStack();
+            SendIngotToProcessor(collectibleFromPlayer);
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
