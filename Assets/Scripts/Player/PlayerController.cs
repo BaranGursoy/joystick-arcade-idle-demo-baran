@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float playerMoveSpeed;
     [SerializeField] private float swordSwingDuration;
+    [SerializeField] private float broomSwoopDuration;
     [SerializeField] private int maxCarriedCollectibleCount;
     [SerializeField] private Animator animator;
     [SerializeField] private CharacterController characterController;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private Pickaxe pickaxe;
     [SerializeField] private Sword sword;
+    [SerializeField] private Broom broom;
 
     private Stack<Collectible> _collectibleStack = new Stack<Collectible>();
 
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public PlayerMoveState MoveState { get; private set; }
     
     public bool playerGotSword { get; private set; }
+    public bool playerKilledEnemy { get; private set; }
     
     
     public bool StackIsEmpty => _collectibleStack.Count == 0;
@@ -55,17 +58,27 @@ public class PlayerController : MonoBehaviour
     {
         GameActions.PlayerTouchedSword += SetPlayerGotSword;
         GameActions.EnemyDied += DisableSword;
+        GameActions.EnemyDied += PlayerKilledEnemy;
+        GameActions.GameFinished += DisableBroom;
     }
 
     private void OnDestroy()
     {
         GameActions.PlayerTouchedSword -= SetPlayerGotSword;
         GameActions.EnemyDied -= DisableSword;
+        GameActions.EnemyDied -= PlayerKilledEnemy;
+        GameActions.GameFinished -= DisableBroom;
     }
 
     private void SetPlayerGotSword()
     {
         playerGotSword = true;
+    }
+    
+    private void PlayerKilledEnemy()
+    {
+        playerKilledEnemy = true;
+        ActivateAndSwooshBroom();
     }
 
     public void SetCollectibleHeight(Transform collectibleParentTransform)
@@ -118,6 +131,20 @@ public class PlayerController : MonoBehaviour
         if (!playerGotSword) return;
 
         sword.DisableSword();
+    }
+    
+    public void ActivateAndSwooshBroom()
+    {
+        if (!playerKilledEnemy) return;
+        
+        broom.ActivateAndSwoopBroom(broomSwoopDuration);
+    }
+    
+    public void DisableBroom()
+    {
+        if (!playerKilledEnemy) return;
+
+        broom.DisableBroom();
     }
 
     public void AddToCollectibleStack(Collectible comingCollectible)

@@ -39,5 +39,6 @@ public class BloodParticleSystem : MonoBehaviour
     {
         contactPoint.y = 0.1f;
         Instantiate(bloodSplatPrefab, contactPoint, bloodSplatPrefab.transform.rotation);
+        GameActions.BloodSplatCreated?.Invoke();
     }
 }

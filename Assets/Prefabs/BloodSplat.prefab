@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3200591066433118294}
   - component: {fileID: 3200591066433118297}
   - component: {fileID: 3200591066433118296}
-  - component: {fileID: 5150815036875308204}
+  - component: {fileID: 6361406514329012482}
   m_Layer: 7
   m_Name: BloodSplat
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4c3c8270e0196984ca1ef6e150073a8e, type: 2}
+  - {fileID: 2100000, guid: 64b763d4bdc2a6f499746bb1d307e08f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,18 +99,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &5150815036875308204
+--- !u!114 &6361406514329012482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3200591066433118299}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc0eabb1d745c44c825d5ee0eaf8373, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ca5be72de2eee34c9ef468e40f3c413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eraseMaterial: {fileID: 2100000, guid: 4c3c8270e0196984ca1ef6e150073a8e, type: 2}
-  broomTransform: {fileID: 0}
-  eraseRadius: 0.1
+  meshRenderer: {fileID: 3200591066433118297}
