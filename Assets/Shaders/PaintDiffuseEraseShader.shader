@@ -45,16 +45,15 @@ Shader "Custom/PaintDiffuseErase"
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.uv0 = TRANSFORM_TEX(v.texcoord, _MainTex);
-                o.uv1 = v.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw; // lightmap uvs
+                o.uv1 = v.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
                 return o;
             }
 
             half4 frag(v2f i) : SV_Target
             {
-                half4 mainColor = tex2D(_MainTex, i.uv0); // main texture
-                half4 paint = tex2D(_PaintMap, i.uv1);     // painted on texture
+                half4 mainColor = tex2D(_MainTex, i.uv0);
+                half4 paint = tex2D(_PaintMap, i.uv1);
                 
-                // Multiply main color by paint color but set alpha to minimum
                 mainColor.a = min(mainColor.a, paint.a);
                 return mainColor;
             }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BloodSplat_Inperformant : MonoBehaviour
 {
+    // This script is left here to show my attempt of erasable BloodSplat, this works but it is bad as performance-wise since it uses SetPixel and operated on CPU
+    
     public Material eraseMaterial;
     public Transform broomTransform;
     public float eraseRadius = 0.1f;
@@ -9,11 +11,9 @@ public class BloodSplat_Inperformant : MonoBehaviour
 
     void Start()
     {
-        // Initialize the paint texture
         paintTexture = new Texture2D(1024, 1024, TextureFormat.RGBA32, false);
         eraseMaterial.SetTexture("_PaintMap", paintTexture);
-
-        // Fill the paint texture with white (fully opaque)
+        
         Color[] colors = new Color[paintTexture.width * paintTexture.height];
         for (int i = 0; i < colors.Length; i++)
         {
@@ -54,7 +54,7 @@ public class BloodSplat_Inperformant : MonoBehaviour
                     if (distance <= radius)
                     {
                         Color existingColor = paintTexture.GetPixel(px, py);
-                        paintTexture.SetPixel(px, py, new Color(existingColor.r, existingColor.g, existingColor.b, 0)); // Erase by setting alpha to 0
+                        paintTexture.SetPixel(px, py, new Color(existingColor.r, existingColor.g, existingColor.b, 0));
                     }
                 }
             }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordHolder : MonoBehaviour
@@ -16,8 +13,7 @@ public class SwordHolder : MonoBehaviour
             _swordCrafted = false;
         }
     }
-
-
+    
     public void SetSwordCrafted()
     {
         _swordCrafted = true;
