@@ -57,6 +57,8 @@ public class Forge : Interactable
         MoveSwordToRightSide(spawnedSword);
         
         UpdateIngotCountText();
+
+        ResetDroppedCollectibleCount();
     }
 
     private void MoveSwordToRightSide(GameObject spawnedSword)

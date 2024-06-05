@@ -55,8 +55,8 @@ public class Processor : Interactable
         {
             spawnedIngot.SendIngotToMachineStack(ingotHolder);
         }
-        
-        droppedCollectibleCount = 0;
+
+        ResetDroppedCollectibleCount();
         UpdateRockCountText();
     }
 
@@ -90,7 +90,9 @@ public class Processor : Interactable
     {
         if (droppedCollectibleCount >= neededCollectibleCount) yield return null;
 
-        for (int i = 0; i < neededCollectibleCount - droppedCollectibleCount; i++)
+        int neededCollectibleLeft = neededCollectibleCount - droppedCollectibleCount;
+        
+        for (int i = 0; i < neededCollectibleLeft; i++)
         {
             if (playerController.StackIsEmpty || playerController.PeekStack() is not Ore) yield break;
 

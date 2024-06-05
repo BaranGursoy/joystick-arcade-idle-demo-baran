@@ -61,4 +61,9 @@ public abstract class Interactable : MonoBehaviour
     {
         droppedCollectibleCount++;
     }
+
+    public void ResetDroppedCollectibleCount()
+    {
+        droppedCollectibleCount = 0;
+    }
 }
