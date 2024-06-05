@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] protected GameObject collectiblePrefab;
+    [SerializeField] protected PrefabType collectiblePrefabType;
     [SerializeField] protected float collectibleSpawnRate = 0.5f;
     
     [SerializeField] protected int neededCollectibleCount = 5;
@@ -21,8 +22,8 @@ public abstract class Interactable : MonoBehaviour
 
     protected Collectible SpawnCollectible(Transform parentTransform)
     {
-        lastSpawnedCollectible = Instantiate(collectiblePrefab, parentTransform.position, Quaternion.identity, null)
-            .GetComponent<Collectible>();
+        lastSpawnedCollectible =
+            ObjectPooler.Instance.SpawnFromPool(collectiblePrefabType, parentTransform.position, Quaternion.identity).GetComponent<Collectible>();//Instantiate(collectiblePrefab, parentTransform.position, Quaternion.identity, null).GetComponent<Collectible>();
         
         lastSpawnedCollectible.transform.SetParent(parentTransform);
 

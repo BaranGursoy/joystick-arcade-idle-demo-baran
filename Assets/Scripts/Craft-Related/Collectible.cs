@@ -18,11 +18,13 @@ public abstract class Collectible : MonoBehaviour
     
     public void SendCollectibleToMachine(Interactable interactableMachine)
     {
+        PrefabType collectibleType = this is Ingot ? PrefabType.Ingot : PrefabType.Ore;
+        
         transform.DOJump(interactableMachine.transform.position, 0.7f, 1, 0.3f)
             .SetEase(Ease.OutSine).OnComplete(()=>
             {
                 interactableMachine.CollectableArrived();
-                Destroy(gameObject);
+                ObjectPooler.Instance.ReturnToPool(gameObject, collectibleType);
             });
 
         transform.DORotate(interactableMachine.transform.rotation.eulerAngles, 0.29f);

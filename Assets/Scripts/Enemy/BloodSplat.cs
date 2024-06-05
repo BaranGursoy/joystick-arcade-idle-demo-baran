@@ -34,8 +34,14 @@ public class BloodSplat : MonoBehaviour
             if (_material.color.a <= 0.2f)
             {
                 GameActions.BloodSplatCleaned?.Invoke();
-                Destroy(gameObject);
+                DestroyBloodSplat();
             }
         });
+    }
+
+    private void DestroyBloodSplat()
+    {
+        ObjectPooler.Instance.ReturnToPool(gameObject, PrefabType.BloodSplat);
+        _material.color = _originalColor;
     }
 }

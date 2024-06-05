@@ -406,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectiblePrefab: {fileID: 8437224377022928519, guid: e1fbcd85f59e873468af920df3458bf2,
     type: 3}
+  collectiblePrefabType: 1
   collectibleSpawnRate: 5
   neededCollectibleCount: 5
   ingotHolder: {fileID: 4917244692910755571}
@@ -544,7 +545,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingotTransform: {fileID: 8437224377022928518, guid: e1fbcd85f59e873468af920df3458bf2,
     type: 3}
-  stackCapacity: 5
 --- !u!135 &7953849665503091998
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -34,7 +34,8 @@ public class BloodParticleSystem : MonoBehaviour
     private void SpawnBloodSplat(Vector3 contactPoint)
     {
         contactPoint.y = 0.1f;
-        Instantiate(bloodSplatPrefab, contactPoint, bloodSplatPrefab.transform.rotation);
+        GameObject bloodSpatObject = ObjectPooler.Instance.SpawnFromPool(PrefabType.BloodSplat, contactPoint, bloodSplatPrefab.transform.rotation);
+        bloodSpatObject.transform.SetParent(null);
         GameActions.BloodSplatCreated?.Invoke();
     }
 }
