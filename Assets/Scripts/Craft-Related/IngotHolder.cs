@@ -6,8 +6,7 @@ using UnityEngine;
 public class IngotHolder : MonoBehaviour
 {
     [SerializeField] private Transform ingotTransform;
-    [SerializeField] private int stackCapacity = 5;
-    
+
     private Stack<Ingot> _ingotStack = new Stack<Ingot>();
     
     private float _ingotHeight;
