@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
         if (_createdBloodSplatCount <= 0)
         {
+            GameActions.PlaySfxAction?.Invoke(SFXType.GameWon);
             GameActions.GameFinished?.Invoke();
         }
     }

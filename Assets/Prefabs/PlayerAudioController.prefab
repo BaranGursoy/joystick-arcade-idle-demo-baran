@@ -155,3 +155,5 @@ MonoBehaviour:
     sfxClip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
   - sfxType: 5
     sfxClip: {fileID: 8300000, guid: 0750c0f2c98c82b40924c1163b6e58f3, type: 3}
+  - sfxType: 6
+    sfxClip: {fileID: 8300000, guid: 1efa3438ef95fee4288424787be65fc9, type: 3}

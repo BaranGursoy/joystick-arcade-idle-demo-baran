@@ -10,13 +10,9 @@ public class BloodParticleSystem : MonoBehaviour
     [SerializeField] private GameObject bloodSplatPrefab;
     private List<ParticleCollisionEvent> _collisionEvents = new();
 
-    private int _collisionCount;
-
-
     public void Play()
     {
         bloodParticleSystem.Play();
-        _collisionCount = 0;
     }
 
     private void OnParticleCollision(GameObject other)

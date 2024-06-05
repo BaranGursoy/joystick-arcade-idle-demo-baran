@@ -11,6 +11,7 @@ public class JoystickController : MonoBehaviour
 
     private void OnEnable()
     {
+        GameActions.GameFinished += DisableJoystick;
         InputHandler.OnInputDown += HandleInputDown;
         InputHandler.OnInputDrag += HandleInputDrag;
         InputHandler.OnInputUp += HandleInputUp;
@@ -18,6 +19,7 @@ public class JoystickController : MonoBehaviour
 
     private void OnDisable()
     {
+        GameActions.GameFinished -= DisableJoystick;
         InputHandler.OnInputDown -= HandleInputDown;
         InputHandler.OnInputDrag -= HandleInputDrag;
         InputHandler.OnInputUp -= HandleInputUp;
@@ -60,5 +62,10 @@ public class JoystickController : MonoBehaviour
         onScreenStick.OnPointerUp(pointerEventData);
 
         joystickComponents.SetActive(false);
+    }
+
+    private void DisableJoystick()
+    {
+        gameObject.SetActive(false);
     }
 }
