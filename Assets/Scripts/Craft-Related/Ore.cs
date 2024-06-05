@@ -15,11 +15,7 @@ public class Ore : Collectible
         
         _isCollectible = true;
     }
-
-    public override void OnCollect()
-    {
-    }
-
+    
     public void SendOreFromGroundToPlayerStack(PlayerController playerController)
     {
         if (!_isCollectible) return;

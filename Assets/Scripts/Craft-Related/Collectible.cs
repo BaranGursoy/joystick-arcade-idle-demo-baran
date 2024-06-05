@@ -8,7 +8,10 @@ public abstract class Collectible : MonoBehaviour
         transform.SetParent(playerController.StackStartPointTransform, true);
         transform.localScale = Vector3.one;
         transform.DOLocalMove(playerController.GetNextStackItemPosition(), 0.3f)
-            .SetEase(Ease.OutSine);
+            .SetEase(Ease.OutSine).OnComplete(() =>
+            {
+                GameActions.PlaySfxAction?.Invoke(SFXType.CollectItem);
+            });
 
         transform.DOLocalRotate(playerController.StackStartPointTransform.localRotation.eulerAngles, 0.3f);
     }
@@ -24,7 +27,4 @@ public abstract class Collectible : MonoBehaviour
 
         transform.DORotate(interactableMachine.transform.rotation.eulerAngles, 0.29f);
     }
-    
-    public abstract void OnCollect();
-
 }

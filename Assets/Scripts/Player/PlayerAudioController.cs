@@ -52,7 +52,8 @@ public enum SFXType
     SwordCrafted,
     Swoosh,
     Hit,
-    GameWon
+    GameWon,
+    CollectItem
 }
 
 [Serializable]
