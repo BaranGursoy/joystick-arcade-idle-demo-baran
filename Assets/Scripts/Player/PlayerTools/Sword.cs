@@ -1,30 +1,19 @@
-using DG.Tweening;
 using UnityEngine;
 
-public class Sword : MonoBehaviour
+public class Sword : SwingingTool
 {
-    private Tween _swordTween;
-    
+    private const float StartRotationY = -80f; // Magic number for start rotation
+    private const float TargetRotationY = 80f; // Magic number for target rotation
     public void ActivateAndSwingSword(float oneSwingAndBackDuration)
     {
-        Vector3 startRotation = new Vector3(0f, -80f, 0f);
-        transform.localRotation = Quaternion.Euler(startRotation);
-        gameObject.SetActive(true);
+        Vector3 startRotation = new Vector3(0f, StartRotationY, 0f);
+        Vector3 targetRotationForSword = new Vector3(0f, TargetRotationY, 0f);
 
-        Vector3 targetRotationForSword = new Vector3(0f, 80f, 0f);
-
-        float oneSwingDuration = oneSwingAndBackDuration / 2f;
-
-        _swordTween = transform.DOLocalRotate(targetRotationForSword, oneSwingDuration).SetEase(Ease.OutSine).SetLoops(-1, LoopType.Yoyo).OnStepComplete(
-            () =>
-            {
-                GameActions.PlaySfxAction?.Invoke(SFXType.Swoosh);
-            });
+        ActivateAndSwing(startRotation, targetRotationForSword, oneSwingAndBackDuration, SFXType.Swoosh);
     }
 
     public void DisableSword()
     {
-        _swordTween.Pause();
-        gameObject.SetActive(false);
+        Disable();
     }
 }

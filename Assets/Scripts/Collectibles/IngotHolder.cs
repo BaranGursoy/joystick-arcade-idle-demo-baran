@@ -46,10 +46,10 @@ public class IngotHolder : MonoBehaviour
     
     public Vector3 GetNextStackItemPosition()
     {
-        Vector3 nextStackItemLocalPosition =
-            transform.localPosition + (Vector3.up * (_ingotHeight * _ingotStack.Count)) + (Vector3.up * 0.1f);
+        Vector3 nextStackItemPosition =
+            transform.position + (Vector3.up * (_ingotHeight * _ingotStack.Count)) + (Vector3.up * 0.1f);
 
-        return nextStackItemLocalPosition;
+        return nextStackItemPosition;
     }
 
     private void OnTriggerEnter(Collider other)

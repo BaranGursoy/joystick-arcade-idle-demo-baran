@@ -7,6 +7,8 @@ public class Processor : Interactable
     [SerializeField] private IngotHolder ingotHolder;
     [SerializeField] private TextMeshPro processorCountTMP;
     [SerializeField] private TextMeshPro processorTimerTMP;
+    
+    private const float ProcessDelay = 0.1f;
 
     private void SendOreToProcessor(Collectible collectible)
     {
@@ -43,7 +45,7 @@ public class Processor : Interactable
         
         processorTimerTMP.text = "0";
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(ProcessDelay);
 
         DisableProcessTimerTMP();
         
@@ -60,30 +62,19 @@ public class Processor : Interactable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            HandlePlayerEnter(other);
-        }
-    }
+        PlayerUtils.HandlePlayerEnter(other, ref playerController, collectiblePrefab.transform, ref isPlayerInsideArea);
 
-    private void HandlePlayerEnter(Collider other)
-    {
-        if (!playerController)
-        {
-            playerController = other.gameObject.GetComponentInParent<PlayerController>();
-        }
-
-        if (!playerController) return;
-
-        playerController.SetCollectibleHeight(collectiblePrefab.transform);
-        isPlayerInsideArea = true;
-
-        if (!playerController.StackIsEmpty)
+        if (isPlayerInsideArea && !playerController.StackIsEmpty)
         {
             StartCoroutine(SendPlayerOresCoroutine());
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        PlayerUtils.HandlePlayerExit(other, ref isPlayerInsideArea, playerController);
+    }
+    
     private IEnumerator SendPlayerOresCoroutine()
     {
         if (droppedCollectibleCount >= neededCollectibleCount) yield return null;
@@ -106,7 +97,7 @@ public class Processor : Interactable
         processorCountTMP.text = $"Rock Count: {droppedCollectibleCount}/{neededCollectibleCount}";
     }
 
-    public void DisableProcessTimerTMP()
+    private void DisableProcessTimerTMP()
     {
         processorTimerTMP.gameObject.SetActive(false);
     }

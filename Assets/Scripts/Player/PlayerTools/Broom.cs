@@ -1,30 +1,20 @@
-using DG.Tweening;
 using UnityEngine;
 
-public class Broom : MonoBehaviour
+public class Broom : SwingingTool
 {
-    private Tween _broomTween;
-    
+    private const float StartRotationZ = -80f; // Magic number for start rotation
+    private const float TargetRotationZ = 80f; // Magic number for target rotation
+
     public void ActivateAndSwoopBroom(float oneSwingAndBackDuration)
     {
-        Vector3 startRotation = new Vector3(0f, 0f, -80f);
-        transform.localRotation = Quaternion.Euler(startRotation);
-        gameObject.SetActive(true);
+        Vector3 startRotation = new Vector3(0f, 0f, StartRotationZ);
+        Vector3 targetRotationForBroom = new Vector3(0f, 0f, TargetRotationZ);
 
-        Vector3 targetRotationForBroom = new Vector3(0f, 0f, 80f);
-
-        float oneSwingDuration = oneSwingAndBackDuration / 2f;
-
-        _broomTween = transform.DOLocalRotate(targetRotationForBroom, oneSwingDuration).SetEase(Ease.OutSine)
-            .SetLoops(-1, LoopType.Yoyo).OnStepComplete(() =>
-            {
-                GameActions.PlaySfxAction?.Invoke(SFXType.BroomSweep);
-            });
+        ActivateAndSwing(startRotation, targetRotationForBroom, oneSwingAndBackDuration, SFXType.BroomSweep);
     }
 
     public void DisableBroom()
     {
-        _broomTween.Pause();
-        gameObject.SetActive(false);
+        Disable();
     }
 }

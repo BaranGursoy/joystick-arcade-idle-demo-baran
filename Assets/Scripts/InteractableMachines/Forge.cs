@@ -9,6 +9,11 @@ public class Forge : Interactable
     [SerializeField] private TextMeshPro forgeIngotCountTMP;
     [SerializeField] private TextMeshPro forgeTimerTMP;
     [SerializeField] private SwordHolder swordHolder;
+    
+    private const float SwordSpawnDelay = 0.1f;
+    private const float JumpPower = 0.7f;
+    private const int NumberOfJumps = 1;
+    private const float JumpDuration = 0.3f;
 
     private void SendIngotToProcessor(Collectible collectible)
     {
@@ -45,7 +50,7 @@ public class Forge : Interactable
         
         forgeTimerTMP.text = "0";
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(SwordSpawnDelay);
 
         DisableProcessTimerTMP();
 
@@ -61,11 +66,12 @@ public class Forge : Interactable
     private void MoveSwordToRightSide(GameObject spawnedSword)
     {
         spawnedSword.transform.SetParent(swordHolderTransform, true);
-        spawnedSword.transform.DOLocalJump(Vector3.zero, 0.7f, 1, 0.3f).SetEase(Ease.OutSine).OnComplete(() =>
-        {
-            swordHolder.SetSwordCrafted();
-            GameActions.PlaySfxAction?.Invoke(SFXType.SwordCrafted);
-        });
+        TweenAnimateUtils.JumpToLocalPosition(spawnedSword.transform, swordHolderTransform, Vector3.zero, JumpPower, NumberOfJumps, JumpDuration, Ease.OutSine,
+            () =>
+            {
+                swordHolder.SetSwordCrafted();
+                GameActions.PlaySfxAction?.Invoke(SFXType.SwordCrafted);
+            });
     }
 
     private void OnTriggerEnter(Collider other)

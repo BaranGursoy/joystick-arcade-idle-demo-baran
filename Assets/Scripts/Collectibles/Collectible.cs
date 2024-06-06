@@ -3,31 +3,30 @@ using UnityEngine;
 
 public abstract class Collectible : MonoBehaviour
 {
+    private const float MoveDuration = 0.3f;
+    private const float JumpPower = 0.7f;
+    private const int NumberOfJumps = 1;
+    private const float JumpDuration = 0.3f;
+
+    
     public void SendCollectibleToPlayer(PlayerController playerController)
     {
-        transform.SetParent(playerController.StackStartPointTransform, true);
-        transform.localScale = Vector3.one;
-        transform.DOLocalMove(playerController.GetNextStackItemPosition(), 0.3f)
-            .SetEase(Ease.OutSine).OnComplete(() =>
-            {
-                GameActions.StopShakingCamera?.Invoke();
-                GameActions.PlaySfxAction?.Invoke(SFXType.CollectItem);
-            });
-
-        transform.DOLocalRotate(playerController.StackStartPointTransform.localRotation.eulerAngles, 0.3f);
+        Vector3 nextStackPosition = playerController.GetNextStackItemPosition();
+        TweenAnimateUtils.MoveToLocalPosition(transform, playerController.StackStartPointTransform, nextStackPosition, MoveDuration, Ease.OutSine, () =>
+        {
+            GameActions.StopShakingCamera?.Invoke();
+            GameActions.PlaySfxAction?.Invoke(SFXType.CollectItem);
+        });
     }
-    
+
     public void SendCollectibleToMachine(Interactable interactableMachine)
     {
         PrefabType collectibleType = this is Ingot ? PrefabType.Ingot : PrefabType.Ore;
-        
-        transform.DOJump(interactableMachine.transform.position, 0.7f, 1, 0.3f)
-            .SetEase(Ease.OutSine).OnComplete(()=>
-            {
-                interactableMachine.CollectableArrived();
-                ObjectPooler.Instance.ReturnToPool(gameObject, collectibleType);
-            });
 
-        transform.DORotate(interactableMachine.transform.rotation.eulerAngles, 0.29f);
+        TweenAnimateUtils.JumpToPosition(transform, interactableMachine.transform.position, JumpPower, NumberOfJumps, JumpDuration, Ease.OutSine, () =>
+        {
+            interactableMachine.CollectableArrived();
+            ObjectPooler.Instance.ReturnToPool(gameObject, collectibleType);
+        });
     }
 }

@@ -1,24 +1,18 @@
-using DG.Tweening;
 using UnityEngine;
 
-public class Pickaxe : MonoBehaviour
+public class Pickaxe : SwingingTool
 {
-    private Tween _pickAxeTween;
+    private const float TargetRotationX = 90f;
     public void ActivateAndSwingPickaxe(float oneSwingAndBackDuration)
     {
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
-        gameObject.SetActive(true);
+        Vector3 startRotation = Vector3.zero;
+        Vector3 targetRotationForPickaxe = new Vector3(TargetRotationX, 0f, 0f);
 
-        Vector3 targetRotationForPickaxe = new Vector3(90f, 0f, 0f);
-
-        float oneSwingDuration = oneSwingAndBackDuration / 2f;
-
-        _pickAxeTween = transform.DOLocalRotate(targetRotationForPickaxe, oneSwingDuration).SetLoops(-1, LoopType.Yoyo);
+        ActivateAndSwing(startRotation, targetRotationForPickaxe, oneSwingAndBackDuration, null);
     }
 
     public void DisablePickaxe()
     {
-        _pickAxeTween.Pause();
-        gameObject.SetActive(false);
+        Disable();
     }
 }

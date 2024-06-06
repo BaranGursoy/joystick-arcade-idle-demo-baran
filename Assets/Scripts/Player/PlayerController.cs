@@ -147,8 +147,13 @@ public class PlayerController : MonoBehaviour
 
     public void AddToCollectibleStack(Collectible comingCollectible)
     {
-        if(!StackIsEmpty && PeekStack().GetType() != comingCollectible.GetType()) return;
-        
+        if (!StackIsEmpty && PeekStack().GetType() != comingCollectible.GetType()) return;
+
+        if (StackIsEmpty)
+        {
+            SetCollectibleHeight(comingCollectible.transform);
+        }
+
         _collectibleStack.Push(comingCollectible);
     }
     

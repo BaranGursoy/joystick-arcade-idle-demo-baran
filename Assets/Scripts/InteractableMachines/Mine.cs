@@ -83,39 +83,24 @@ public class Mine : Interactable
 
     private void SendOreToRandomPlace(Ore spawnedOre)
     {
-        spawnedOre.SendToOreToRandomPlace(transform.position);
+        spawnedOre.SendOreToRandomPlace(transform.position);
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            if (!playerController)
-            {
-                playerController = other.gameObject.GetComponentInParent<PlayerController>();
-            }
+        PlayerUtils.HandlePlayerEnter(other, ref playerController, collectiblePrefab.transform, ref isPlayerInsideArea);
 
-            if (playerController)
-            {
-                playerController.ActivateAndSwingPickaxe(collectibleSpawnRate);
-                playerController.SetCollectibleHeight(collectiblePrefab.transform);
-            }
-            
-            isPlayerInsideArea = true;
+        if (isPlayerInsideArea)
+        {
+            playerController.ActivateAndSwingPickaxe(collectibleSpawnRate);
         }
     }
-    
 
     private void OnTriggerExit(Collider other)
     {
-        isPlayerInsideArea = false;
+        PlayerUtils.HandlePlayerExit(other, ref isPlayerInsideArea, playerController);
         ResetPassedTime();
-
-        if (playerController)
-        {
-            playerController.DisablePickaxe();
-        }
     }
 
     public void ResetMine()
