@@ -387,7 +387,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5368844839892673659}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1, z: 1.5}
@@ -406,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectiblePrefab: {fileID: 5187556852678293998, guid: 233818f9a5bdf2443bfbfef9b824e7f5,
     type: 3}
+  collectiblePrefabType: 0
   collectibleSpawnRate: 5
   neededCollectibleCount: 3
   swordHolderTransform: {fileID: 5368844840742784730}
@@ -481,6 +482,7 @@ GameObject:
   - component: {fileID: 5368844840908890163}
   - component: {fileID: 5368844840908890162}
   - component: {fileID: 5368844840908890157}
+  - component: {fileID: 7311147485368153890}
   m_Layer: 0
   m_Name: ProcessorModel
   m_TagString: Untagged
@@ -556,6 +558,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7311147485368153890
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368844840908890156}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7967067379957573726
 GameObject:
   m_ObjectHideFlags: 0

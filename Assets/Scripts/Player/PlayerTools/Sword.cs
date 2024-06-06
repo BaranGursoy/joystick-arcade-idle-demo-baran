@@ -14,6 +14,6 @@ public class Sword : SwingingTool
 
     public void DisableSword()
     {
-        Disable();
+        DisableSwingingTool();
     }
 }

@@ -15,6 +15,6 @@ public class Broom : SwingingTool
 
     public void DisableBroom()
     {
-        Disable();
+        DisableSwingingTool();
     }
 }

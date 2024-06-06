@@ -13,6 +13,6 @@ public class Pickaxe : SwingingTool
 
     public void DisablePickaxe()
     {
-        Disable();
+        DisableSwingingTool();
     }
 }

@@ -24,7 +24,7 @@ public abstract class SwingingTool : MonoBehaviour
             });
     }
 
-    public void Disable()
+    protected void DisableSwingingTool()
     {
         _swingTween?.Pause();
         gameObject.SetActive(false);
