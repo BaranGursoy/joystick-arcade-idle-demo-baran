@@ -8,8 +8,8 @@ public class MineDeformation : MonoBehaviour
     private MeshFilter meshFilter;
     private Vector3[] originalVertices;
     private Vector3[] displacedVertices;
-    private float deformationAmount = 0.01f; // Base amount of deformation
-    private float minY = -1f; // Minimum Y value to clamp the deformation
+    private float deformationAmount = 0.01f;
+    private float minY = -1f;
 
     void Start()
     {
@@ -23,13 +23,13 @@ public class MineDeformation : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // Test deformation with space key
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             DeformFromTopToBottom();
             currentHits++;
             if (currentHits >= maxHits)
             {
-                Destroy(gameObject, 2f); // Destroys the rock after 2 seconds
+                Destroy(gameObject, 2f);
             }
         }
     }
@@ -37,8 +37,7 @@ public class MineDeformation : MonoBehaviour
     void DeformFromTopToBottom()
     {
         if (meshFilter == null || displacedVertices == null) return;
-
-        // Find the highest Y value in the mesh
+        
         float maxY = float.MinValue;
         for (int i = 0; i < displacedVertices.Length; i++)
         {
@@ -47,16 +46,13 @@ public class MineDeformation : MonoBehaviour
                 maxY = displacedVertices[i].y;
             }
         }
-
-        // Deform vertices top to bottom with randomness
+        
         for (int i = 0; i < displacedVertices.Length; i++)
         {
-            if (displacedVertices[i].y >= maxY - 0.1f) // Adjust the range as needed for more natural effect
+            if (displacedVertices[i].y >= maxY - 0.1f)
             {
-                float randomDeformation = Random.Range(0.05f, deformationAmount); // Random deformation amount
+                float randomDeformation = Random.Range(0.05f, deformationAmount);
                 displacedVertices[i].y -= randomDeformation;
-
-                // Optional: Ensure vertices don't go below a certain threshold
                 displacedVertices[i].y = Mathf.Max(displacedVertices[i].y, minY);
             }
         }

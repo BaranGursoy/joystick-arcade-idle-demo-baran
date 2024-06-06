@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Broom : SwingingTool
 {
-    private const float StartRotationZ = -80f; // Magic number for start rotation
-    private const float TargetRotationZ = 80f; // Magic number for target rotation
+    private const float StartRotationZ = -60f;
+    private const float TargetRotationZ = 60f;
 
     public void ActivateAndSwoopBroom(float oneSwingAndBackDuration)
     {
